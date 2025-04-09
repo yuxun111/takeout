@@ -17,31 +17,32 @@
         update sky_take_out.employee
         <set>
             <if test="name !=null">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="username !=null">
-                username = #{username}
+                username = #{username},
             </if>
             <if test="password !=null">
-                password = #{password}
+                password = #{password},
             </if>
             <if test="phone !=null">
-                phone = #{phone}
+                phone = #{phone},
             </if>
             <if test="sex !=null">
-                sex = #{sex}
+                sex = #{sex},
             </if>
             <if test="idNumber !=null">
-                idNumber = #{idNumber}
+                id_number = #{idNumber},
             </if>
-            <if test="status !=null">
-                status = #{status}
-            </if>
+
             <if test="updateTime !=null">
-                updateTime = #{updateTime}
+                update_time = #{updateTime},
             </if>
             <if test="updateUser !=null">
-                updateUser = #{updateUser}
+                update_user = #{updateUser},
+            </if>
+            <if test="status !=null">
+                status = #{status},
             </if>
         </set>
         where id = #{id}
