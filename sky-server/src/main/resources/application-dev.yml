@@ -8,4 +8,6 @@ sky:
     password: '000424'
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-
+    access-key-id: LTAI5t7pJsVcSJ8Wzpx7rYgc
+    access-key-secret: UPQRui2Q9H8AJIpvsbxNXtQ3nD0NFp
+    bucket-name: yuxun111
