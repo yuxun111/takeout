@@ -9,10 +9,12 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,6 +39,8 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
     /**
      * 新增菜品和对应口味
      *
@@ -162,5 +167,46 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
 
         }
+    }
+
+    /**
+     * 菜品起售停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @Transactional
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setStatus(status);
+        dishMapper.update(dish);
+        if (status == StatusConstant.DISABLE){
+            //停售操作需要将套餐也停了
+            // select setmeal_id from setmeal_dish where dish_id in (?,?,?)  从套餐表里选出含有该菜品的套餐id（可能不止一个
+            List<Long> dishIds = new ArrayList<>();
+            dishIds.add(id);
+            List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishId(dishIds);
+            if(setmealIds != null && setmealIds.size() > 0){ //有套餐
+                for(Long setmealId : setmealIds) { //遍历套餐id
+                    Setmeal setmeal = new Setmeal();
+                    setmeal.setId(setmealId);
+                    setmeal.setStatus(StatusConstant.DISABLE);
+                    setmealMapper.update(setmeal);
+                }
+            }
+        }
+    }
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    public List<Dish> list(Long categoryId){
+        Dish dish =Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE) //为何起售？
+                .build();
+        return  dishMapper.list(dish);
     }
 }
