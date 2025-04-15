@@ -11,3 +11,8 @@ sky:
     access-key-id: LTAI5t7pJsVcSJ8Wzpx7rYgc
     access-key-secret: UPQRui2Q9H8AJIpvsbxNXtQ3nD0NFp
     bucket-name: yuxun111
+  redis:
+    host: 192.168.181.128
+    port: 6379
+    password: 123456
+    database: 0
