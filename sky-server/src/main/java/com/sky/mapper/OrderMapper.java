@@ -9,6 +9,7 @@ import com.github.pagehelper.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -60,4 +61,8 @@ public interface OrderMapper {
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndOrderTime(Integer status,LocalDateTime orderTime);
 
+    /*
+    根据动态条件统计营业额
+     */
+    Double sumByMap(Map map);
 }

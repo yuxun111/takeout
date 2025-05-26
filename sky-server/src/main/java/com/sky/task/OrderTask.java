@@ -22,7 +22,7 @@ public class OrderTask {
     /**
      * 处理超时订单
      */
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void prossTimeoutOrder(){
         log.info("处理超时订单{}", LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-15);
