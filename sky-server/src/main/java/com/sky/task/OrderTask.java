@@ -22,7 +22,7 @@ public class OrderTask {
     /**
      * 处理超时订单
      */
-    @Scheduled(cron = "0 0/30 * * * ?")
+    //@Scheduled(cron = "0 0/30 * * * ?")
     public void prossTimeoutOrder(){
         log.info("处理超时订单{}", LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-15);
@@ -42,8 +42,8 @@ public class OrderTask {
     /**
      * 处理持续派送中的订单
      */
-    @Scheduled(cron = "0 0 1 * * ?")//每天凌晨1点触发
-   // @Scheduled(cron = "0/5 * * * * ?")
+    //@Scheduled(cron = "0 0 1 * * ?")//每天凌晨1点触发
+
     public void processDeliveryOrder(){
         log.info("处理持续派送中的订单{}", LocalDateTime.now());
         LocalDateTime time = LocalDateTime.now().plusMinutes(-60);
